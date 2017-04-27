@@ -29,7 +29,10 @@ setup_cpush()
   export PATH=$PATH:$HOME/software/libbot/build/bin  # for lcm and libbot install
   export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
   export LD_LIBRARY_PATH=$CPUSH_BASE/software/build/lib:$CPUSH_BASE/software/build/lib64:$LD_LIBRARY_PATH
-  export LD_LIBRARY_PATH=$HOME/software/gurobi651/linux64/lib:$LD_LIBRARY_PATH  # for gurobi
+  export GUROBI_HOME="$HOME/software/gurobi702/linux64"
+  export PATH="${PATH}:${GUROBI_HOME}/bin"
+  export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${GUROBI_HOME}/lib"
+  #~ export LD_LIBRARY_PATH=$HOME/software/gurobi651/linux64/lib:$LD_LIBRARY_PATH  # for gurobi
   
   export CLASSPATH=$CLASSPATH:/usr/local/share/java/lcm.jar:$CPUSH_BASE/software/build/share/java/lcmtypes_cpush_lcmtypes.jar
   export CLASSPATH=$CLASSPATH:$CPUSH_BASE/software/build/share/java/drake.jar:$CPUSH_BASE/software/build/share/java/bot2-lcmgl.jar
@@ -52,7 +55,7 @@ set_ros()
   if [ -f $CPUSH_BASE/catkin_ws/devel/setup.bash ]; then
     source $CPUSH_BASE/catkin_ws/devel/setup.bash
   else
-    source /opt/ros/indigo/setup.bash
+    source /opt/ros/kinetic/setup.bash
   fi
   export ROS_PACKAGE_PATH=$HOME/cpush/ros_ws/:$ROS_PACKAGE_PATH
 }

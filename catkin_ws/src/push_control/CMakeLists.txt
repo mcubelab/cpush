@@ -148,7 +148,9 @@ include_directories(
 
 ## Declare a cpp executable
 # add_executable(push_control src/ABBRobot.cpp src/OptProgram.cpp  src/helper.cpp src/pushing.cpp src/main.cpp src/PracticalSocket/PracticalSocket.cpp src/egm/egm.pb.cc)
-add_executable(push_control src_QS/main.cpp src_QS/ABBRobot.cpp src_QS/OptProgram.cpp  src_QS/helper.cpp src_QS/Push.cpp src_QS/PracticalSocket/PracticalSocket.cpp src_QS/egm/egm.pb.cc)
+#~ add_executable(push_control src_QS/main.cpp src_QS/ABBRobot.cpp src_QS/OptProgram.cpp  src_QS/helper.cpp src_QS/Push.cpp src_QS/PracticalSocket/PracticalSocket.cpp src_QS/egm/egm.pb.cc)
+add_executable(push_control src_ISRR/main.cpp)
+
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes

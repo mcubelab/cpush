@@ -82,6 +82,41 @@ classdef Controller < dynamicprops & PusherSliderSystem & Friction
             %Forces
             xs = [ribi;theta;ripi;theta];
         end
+        
+        function [xc,uc] = fullTransformSC(obj,xs,us); 
+            % Transform coordinates and inputs states from simulator to
+            % controller description
+            %  state coordinates 
+            %
+            %   USAGE
+            %   [xc,uc] = fullTransformSC(xs,us)
+            %
+            %   Parameters:
+            %   xs        -   6x1 simulator pose matrix [x;y;theta;xp;yp;thetap]. (pose of slider AND pose of pusher in inertial coordinates)
+            %   xc        -   4x1 controller state [x;y;theta;ry]. (pose of slider AND relative pose of center of pusher)
+            %   us        -   3x1 pusher velocity (in world frame)
+            %   uc        -   5x1 input matrix [fn1,fn2,ft1,ft2,dry]
+            s = Simulator();
+            [dxs, Fgen] = s.lineSimulator(xs,us);
+            xc = obj.coordinateTransformSC(xs);
+            uc = [Fgen(1:2); Fgen(3)-Fgen(4); Fgen(5)-Fgen(6); Fgen(7)*sign(Fgen(3)-Fgen(4))];
+        end
+        
+        function [xs,us] = fullTransformCS(obj, xc,uc); 
+            % Transform coordinates and inputs states from controller to
+            % simulator description
+            %
+            %   USAGE
+            %   [xs,us] = fullTransformCS(xc,uc)
+            %
+            %   Parameters:
+            %   xs        -   6x1 simulator pose matrix [x;y;theta;xp;yp;thetap]. (pose of slider AND pose of pusher in inertial coordinates)
+            %   xc        -   4x1 controller state [x;y;theta;ry]. (pose of slider AND relative pose of center of pusher)
+            %   us        -   3x1 pusher velocity (in world frame)
+            %   uc        -   5x1 input matrix [fn1,fn2,ft1,ft2,dry]
+            us = obj.force2Velocity(xc,uc);
+            xs = obj.coordinateTransformCS(xc);
+        end
         %
         function [us] = force2Velocity(obj, xc, uc)
             % Transform coordinates and inputs from controller state coordinates to

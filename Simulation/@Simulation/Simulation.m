@@ -43,7 +43,11 @@ classdef Simulation < dynamicprops & PusherSliderSystem
         function obj = Simulation(SimName)  
             %% Save data in new folder
             obj.SimName = SimName;
-            tempName = strcat('/Users/Francois/Dropbox (MIT)/Data/',obj.SimName);
+            if ismac()
+                tempName = strcat('/Users/Francois/Dropbox (MIT)/Data/',obj.SimName);
+            elseif isunix() && ~ismac()
+                tempName = strcat('/home/mcube10/Data/cpush/',obj.SimName);
+            end
             mkdir(tempName);
             obj.FilePath = tempName;
             obj.FileName = strcat(obj.FilePath,'/',obj.SimName);

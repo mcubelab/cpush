@@ -4,7 +4,9 @@
 clear all;
 close all;
 clc;
+
 %Setup externals
+
 run('setup.m');
 
 %% Simulation Parameters
